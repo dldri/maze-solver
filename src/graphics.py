@@ -12,7 +12,7 @@ class Line:
         self.point1 = point1
         self.point2 = point2
 
-    def draw(self, canvas: Canvas, fill_colour: str):
+    def draw(self, canvas: Canvas, fill_colour: str = "black"):
         x1 = self.point1.x
         y1 = self.point1.y
         x2 = self.point2.x
@@ -25,11 +25,11 @@ class Window:
         self.__root = Tk()
         self.__root.title("Maze Solver")
         self.__canvas = Canvas(self.__root, width=width, height=height)
-        self.__canvas.pack(fill=BOTH)
+        self.__canvas.pack(fill=BOTH, expand=1)
         self.__running = False
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
 
-    def draw_line(self, line: Line, fill_colour: str):
+    def draw_line(self, line: Line, fill_colour: str = "black"):
         line.draw(self.__canvas, fill_colour)
 
     def redraw(self):
