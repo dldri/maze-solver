@@ -7,7 +7,7 @@ def main():
     width = 800
     height = 600
     win = Window(width, height)
-    maze = Maze(100, 100, 10, 200, 20, 20, win)
+    maze = Maze(100, 100, 10, 10, 20, 20, win)
 
     win.wait_for_close()
 
