@@ -109,3 +109,51 @@ class Maze:
         for row in self._cells:
             for cell in row:
                 cell.visited = False
+
+    def solve(self):
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, row: int, col: int):
+        self._animate()
+        current_cell = self._cells[row][col]
+        current_cell.visited = True
+        if (
+            row == self._num_rows - 1
+            and col == self._num_cols - 1
+        ):
+            print("Maze Solved!")
+            return True
+
+        directions = [
+            (0, -1, current_cell.has_left_wall),  # move left
+            (-1, 0, current_cell.has_top_wall),  # move up
+            (0, 1, current_cell.has_right_wall),  # move right
+            (1, 0, current_cell.has_bottom_wall)  # move down
+        ]
+
+        for d_row, d_col, has_wall in directions:
+            next_row = row + d_row
+            next_col = col + d_col
+            if (
+                next_row < 0
+                or next_row >= self._num_rows
+                or next_col < 0
+                or next_col >= self._num_cols
+            ):
+                continue
+
+            next_cell = self._cells[next_row][next_col]
+
+            if (
+                next_cell
+                and not has_wall
+                and not next_cell.visited
+            ):
+                current_cell.draw_move(next_cell)
+
+                if self._solve_r(next_row, next_col):
+                    return True
+                else:
+                    current_cell.draw_move(next_cell, True)
+
+        return False
